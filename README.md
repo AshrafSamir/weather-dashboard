@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+This is a task from MentorGraphics,
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+You are asked to design and implement a creative single page application for weather forecast with the following specifications:
 
-## Available Scripts
+The application consists of 2 displays 
 
-In the project directory, you can run:
+Landing display : Showing a summary of the current weather for the user’s country (should detect user’s geographical location) 
+		  Should be artistic and simple yet provide the most important information that a general user may need to know the weather of this country now.
+	   	  Should provide access to the  different cities of the country, so the user can access display (2) 
+City weather dashboard: 
+		  Showing a summary of the current weather for the selected city in (1)
+ 		  Showing weather statistics and historical weather information for this city 
+                  The design should include different types of data representations that match the nature of the data (Charts/tables/…)
+ 
 
-### `npm start`
+It is required to deliver:
+Design:
+The application design showing  the full design idea (even if it will not be fully implemented)
+You are free to choose any convenient way of prototyping (wireframes/sketches/…)
+The design should include illustration for the user interaction with the application and a description for the different types of data visualization provided
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Implementation Code:
+The implemented application using Angular 2+ Or React
+Use D3 for implementing at least one of the visualizations).
+The implementation should conform to Angular 2+ Or React standards 
+The implementation shall be responsive
+(*optional: Add features for the user to interact with the dashboard gadgets layout (Expand/Collapse/Resize/Drag & Drop/…))
+(*optional: Creating unit tests and e2e testing for the application)
+Notes:
+Using ready Angular/React dashboard templates will not be accepted
+It's required to use native D3 implementation, avoid using D3 wrappers for angular/react
+A simple PowerPoint presentation showing the work done coupled with screenshots
+A link of the deployed application
+ 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+For the weather data, 
 
-### `npm test`
+Please use this API: https://developer.worldweatheronline.com/ it gives a free PRO account for 30 days with a limit of 500 calls/day
+You’re free to include dummy data on top of the sample data as you feel appropriate.
+ 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Please make sure you deploy your application. For example, you can deploy it on Heroku. You can check this video for a quick tutorial on how to do it How to deploy a React app to Heroku
