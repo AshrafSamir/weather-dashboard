@@ -1,4 +1,4 @@
-export default ()=> {
+export const getCordinates =  ()=> {
 
     var options = {
         enableHighAccuracy: true,
