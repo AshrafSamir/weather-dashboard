@@ -7,10 +7,19 @@
     padding: 1%;
     height: 100vh;
     background-color: whitesmoke;
+    overflow: hidden;
 }
 
-.home-screen{
-    overflow: auto;
-    height: 100vh;
-    flex: 7;
+.card{
+    box-shadow: 1px 2px 10px rgba(0, 0, 0, .2);
+
+}
+.city_card {
+    margin: 0 auto;
+    margin-top: 5%;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    box-shadow: 1px 2px 10px rgba(0, 0, 0, .2);
 }

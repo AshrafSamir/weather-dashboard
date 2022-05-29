@@ -1,89 +1,115 @@
 import * as d3 from 'd3';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
+import { useSelector } from 'react-redux';
 
 const LineChart = (props) => {
 
-	let csvURL = "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv"
 
 	const {width, height } = props;
-
-	const [data, setData] = useState([]);
+  const { chartData } = useSelector((state) => state.weather)
 
   useEffect(()=>{
-    if (data.length > 0) {
+    if (chartData.length > 0) {
       drawChart();
-    } else {
-      getURLData();
-    }
-  },[data])
+    } 
+  },[chartData])
 
-	// gets csv data from a random csv I found
-	// ex. [{date: '2021-12-12', value: 1000}]
-  const getURLData = async () => {
-    let tempData = [];
-      await d3.csv(csvURL,
-      (() =>{}),
-      function(d){
-        //console.log(d);
-        tempData.push({date: d3.timeParse("%Y-%m-%d")(d.date), value: parseFloat(d.value)})
-      }
-
-    )
-      setData(tempData);
-  } 
+    
+    const drawChart = () => {
   
-const drawChart = () => {
+      // Establish margins
+    const margin = { top: 10, right: 50, bottom: 50, left: 50 };
+    // establish x and y max values
+    const yMinValue = d3.min(chartData, d => d.absMaxTemp);
+    const yMaxValue = d3.max(chartData, d => d.absMaxTemp);
+  
+    // create chart area
+    const svg = d3
+        .select('#container')
+        .append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+        .attr('transform', `translate(${margin.left},${margin.top})`);
+  
+    // create scale for the x axis
+    const xScale = d3
+        .scaleBand()
+        .domain(chartData.map(function(d) { return d.name}))
+        .rangeRound([0, width])
 
-	// establish margins
-	const margin = { top: 10, right: 50, bottom: 50, left: 50 };
-
-	// create the chart area
-	const svg = d3
-	    .select('#time_series')
-	    .append('svg')
-	    .attr('width', width + margin.left + margin.right)
-	    .attr('height', height + margin.top + margin.bottom)
-	    .append('g')
-	    .attr('transform', `translate(${margin.left},${margin.top})`);
-
-// Add X axis --> it is a date format
-    var x = d3.scaleTime()
-      .domain(d3.extent(data, function(d) { return d.date; }))
-      .range([ 0, width ]);
-      
-    svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
-
-
-    // Add Y axis
-    var y = d3.scaleLinear()
-      .domain([0, d3.max(data, function(d) { return +d.value; })])
-      .range([ height, 0 ]);
-    svg.append("g")
-      .call(d3.axisLeft(y));
-
-    // set line coordinates
-    const line = d3.line()
-      .x(function(d) { return x(d.date) })
-      .y(function(d) { return y(d.value) })
-
-    // Add the line
-    svg.append("path")
-      .datum(data)
-      .attr("fill", "none")
-      .attr("stroke", "steelblue")
-      .attr("stroke-width", 1.5)
-      .attr("d", line)
- }
-
-return (
-	<div>
-	  	<h4> Time Series </h4>
-	<div id='time_series'/>
-	</div>
-	)
-
-}
-
-export default LineChart;
+        
+    // create scale for y axis
+    const yScale = d3
+        .scaleLinear()
+        .range([height, 0])
+        .domain([yMinValue, yMaxValue]);
+  
+    // Create x grid
+    svg
+        .append('g')
+        .attr('class', 'grid')
+        .attr('transform', `translate(0,${height})`)
+        .call(
+        d3.axisBottom(xScale)
+            .tickSize(-height)
+            .tickFormat(''),
+        );
+  
+    // create y grid
+    svg
+        .append('g')
+        .attr('class', 'grid')
+        .call(
+            d3.axisLeft(yScale)
+            .tickSize(-width)
+            .tickFormat(''),
+        );
+  
+    // create the x axis on the bottom
+    svg
+        .append('g')
+        .attr('class', 'x-axis')
+        .attr('transform', `translate(0,${height})`)
+        .call(d3.axisBottom().scale(xScale).tickSize(15))
+        .selectAll("text")  
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-35)");
+  
+    // create the y axis on the left
+    svg
+        .append('g')
+        .attr('class', 'y-axis')
+        .call(d3.axisLeft(yScale));
+  
+          // create a line with x and y coordinates scaled to the data
+    const line = d3
+        .line()
+        .x(d => xScale(d.name))
+        .y(d => yScale(d.absMaxTemp))    
+        .curve(d3.curveMonotoneX);
+  
+    // draw the line
+    svg
+        .append('path')
+        .datum(chartData)
+        .attr('fill', 'none')
+        .attr('stroke', '#82CFFD')
+        .attr('stroke-width', 4)
+        .attr('class', 'line') 
+        .attr('d', line);
+      }
+  
+    return (
+      <div>
+      <h4> Line Chart 
+         </h4>
+    <div id="container" />
+    </div>
+  
+    )
+  }
+  
+  export default LineChart;

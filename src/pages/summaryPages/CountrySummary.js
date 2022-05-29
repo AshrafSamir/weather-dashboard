@@ -1,24 +1,23 @@
 import React from 'react'
-import Input from '../../components/Input'
-import WeatherCard from '../../components/WeatherCard'
 import LineChart from '../../components/visualization/LineChart'
+import Card from '../../components/Card'
+import { useSelector } from 'react-redux'
+import Input from '../../components/Input'
 
 export default function CountrySummary() {
 
 
- 
+  const { forcastArray, city } = useSelector((state) => state.weather)
 
   return (
-    <div style={{margin: '3%' }}>
+    <div>
       <Input/>
-      <h4> Cairo, Egypt</h4>
+      <h4> {city}</h4>
       <div style={{margin: '3%', display: 'flex', flexWrap: 'wrap' }}>
-        <WeatherCard/>
-        <WeatherCard/>
-        <WeatherCard/>
-        <WeatherCard/>
-        <WeatherCard/>
-        <WeatherCard/>
+        {
+         forcastArray ? forcastArray.map((day) => 
+            (<div key = {day.date}><Card date={day.date} maxtempC={day.maxtempC} mintempC={day.mintempC}/></div>)) : 'Loading'
+        }
       </div>
       <h4> Weather Graph</h4>
       <LineChart width={400} height={400}/>

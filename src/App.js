@@ -1,26 +1,44 @@
 import './App.css';
-import React, { Component, Fragment } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import { connect } from "react-redux";
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { connect, useSelector } from "react-redux";
+import { useDispatch } from 'react-redux'
+import { getWeatherData, getCountry } from './redux/slices/weatherSlice'
+import { useGetCordinates } from './utils/useGetCordinates'
 
-import SummaryPage from './pages/SummaryPage.js';
-import Sidebar from './components/Sidebar'
+import CountrySummary from './pages/summaryPages/CountrySummary'
+import CitySummary from './pages/summaryPages/CitySummary'
 
 
-class App extends Component {
-  render() {
-    return (
-      <div className="layout">
-          <Router>
-            <Fragment>
+function App() {
 
-              <Sidebar/>
-              <SummaryPage />
-            </Fragment>
-          </Router>
-      </div>
+  const dispatch = useDispatch()
+  const crd = useGetCordinates()
+  const { country } = useSelector((state)=> state.weather)
+
+  useEffect(() => {
+    if(crd){
+      dispatch(getCountry(crd))
+    }
+    if(country){
+      dispatch(getWeatherData({city: country}))
+    }
+    
+    
+  }, [country, crd, dispatch])
+
+  return (
+    <div className="layout">
+      <Router>
+        <div style={{  margin: '3%', width: '100vw'}}>
+          <Routes>
+              <Route exact path="/" element={<CountrySummary />} />
+              <Route path="/:city" element={<CitySummary />} />
+          </Routes>
+        </div>
+      </Router>
+    </div>
     );
-  }
 }
 
 export default connect()(App);

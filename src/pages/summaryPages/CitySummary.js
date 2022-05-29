@@ -1,19 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
+import WeatherCard from '../../components/WeatherCard'
+import Input from '../../components/Input'
 
 
 export default function CurrentCondition() {
 
-  const {observation_time, weatherDesc, weatherIconUrl, temp_C, humidity, city} = useSelector((state) => state.weather)
-
+  const {observation_time, weatherDesc, weatherIconUrl, temp_C, humidity, city, windSpeed} = useSelector((state) => state.weather)
   return (
     <div>
-        <span className="border border-2 rounded">{weatherDesc}</span>
-        <span className="border border-2 rounded"><img src={weatherIconUrl} alt="weatherIconUrl"></img></span>
-        <span className="border border-2 rounded">{observation_time}</span>
-        <span className="border border-2 rounded">{temp_C}</span>
-        <span className="border border-2 rounded">{humidity}</span>
-        <span className="border border-2 rounded">{city}</span>
+        <Input/>
+        <WeatherCard observation_time={observation_time} weatherDesc={weatherDesc} weatherIconUrl={weatherIconUrl} temp_C={temp_C} humidity={humidity} city={city} windSpeed={windSpeed} />
     </div>
   )
 }

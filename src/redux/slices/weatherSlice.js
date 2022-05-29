@@ -1,11 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-export const getWeatherData = createAsyncThunk('weather/getWeatherData', async () => {
-    return fetch('http://api.worldweatheronline.com/premium/v1/weather.ashx?key=c922c071a1aa4997ad6224013222605&q=alexandria&num_of_days=7&day=today&tp=3&format=json')
+export const getWeatherData = createAsyncThunk('weather/getWeatherData', async (obj) => {
+    return fetch(`http://api.worldweatheronline.com/premium/v1/weather.ashx?key=c922c071a1aa4997ad6224013222605&q=${obj.city}&num_of_days=7&day=today&tp=3&format=json`)
     .then((res) => 
         res.json()
     )
 })
+
+export const getCountry = createAsyncThunk('weather/getCountry', async (obj) => {
+  return fetch(`http://api.worldweatheronline.com/premium/v1/search.ashx?key=c922c071a1aa4997ad6224013222605&q=${obj.latitude},${obj.longitude}&format=json&num_of_results=5`)
+  .then((res) => 
+      res.json()
+  )
+})
+
 
 const initialState = {
     data: {},
@@ -15,7 +23,12 @@ const initialState = {
     temp_C: null,
     humidity: null,
     city: null,
+    forcastArray: [],
+    chartData: [],
+    windSpeed: null,
+    country: null,
     status: null,
+
 }
 
 export const weatherSlice = createSlice({
@@ -29,6 +42,7 @@ export const weatherSlice = createSlice({
     },
     [getWeatherData.fulfilled]: (state, action) => {
       console.log(action.payload.data)
+      
       state.data = Object.assign(action.payload.data)
       state.observation_time = action.payload.data.current_condition[0].observation_time
       state.weatherDesc = action.payload.data.current_condition[0].weatherDesc[0].value
@@ -36,9 +50,23 @@ export const weatherSlice = createSlice({
       state.temp_C = action.payload.data.current_condition[0].temp_C
       state.humidity = action.payload.data.current_condition[0].humidity
       state.city = action.payload.data.request[0].query
+      state.forcastArray = action.payload.data.weather
+      state.chartData = action.payload.data.ClimateAverages[0].month
+      state.windSpeed = action.payload.data.current_condition[0].windspeedKmph
       state.status = 'success'
     },
     [getWeatherData.rejected]: (state, action) => {
+      state.status = 'failed'
+    },
+    [getCountry.pending]: (state, action) => {
+      state.status = 'loading'
+    },
+    [getCountry.fulfilled]: (state, action) => {
+      //console.log(action.payload.search_api.result[0].country[0].value)
+      state.country = action.payload.search_api.result[0].country[0].value
+      state.status = 'success'
+    },
+    [getCountry.rejected]: (state, action) => {
       state.status = 'failed'
     },
   },
