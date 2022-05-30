@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 export const getWeatherData = createAsyncThunk('weather/getWeatherData', async (obj) => {
-    return fetch(`http://api.worldweatheronline.com/premium/v1/weather.ashx?key=c922c071a1aa4997ad6224013222605&q=${obj.city}&num_of_days=7&day=today&tp=3&format=json`)
+    return fetch(`http://api.worldweatheronline.com/premium/v1/weather.ashx?key=c922c071a1aa4997ad6224013222605&q=${obj.city}&num_of_days=10&day=today&tp=3&format=json`)
     .then((res) => 
         res.json()
     )
@@ -27,6 +27,8 @@ const initialState = {
     chartData: [],
     windSpeed: null,
     country: null,
+    hourlyData: [],
+    astronomy: {},
     status: null,
 
 }
@@ -42,7 +44,6 @@ export const weatherSlice = createSlice({
     },
     [getWeatherData.fulfilled]: (state, action) => {
       console.log(action.payload.data)
-      
       state.data = Object.assign(action.payload.data)
       state.observation_time = action.payload.data.current_condition[0].observation_time
       state.weatherDesc = action.payload.data.current_condition[0].weatherDesc[0].value
@@ -53,6 +54,8 @@ export const weatherSlice = createSlice({
       state.forcastArray = action.payload.data.weather
       state.chartData = action.payload.data.ClimateAverages[0].month
       state.windSpeed = action.payload.data.current_condition[0].windspeedKmph
+      state.hourlyData = action.payload.data.weather[0].hourly
+      state.astronomy = Object.assign(action.payload.data.weather[0].astronomy[0])
       state.status = 'success'
     },
     [getWeatherData.rejected]: (state, action) => {

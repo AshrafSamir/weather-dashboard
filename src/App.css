@@ -12,6 +12,7 @@
 
 .card{
     box-shadow: 1px 2px 10px rgba(0, 0, 0, .2);
+    border-radius: .25rem;
 
 }
 .city_card {
@@ -23,3 +24,20 @@
     border-radius: .25rem;
     box-shadow: 1px 2px 10px rgba(0, 0, 0, .2);
 }
+
+
+
+th {
+    background: #333;
+    color: white;
+    font-weight: bold;
+    cursor: s-resize;
+    background-repeat: no-repeat;
+    background-position: 3% center;
+  }
+  td,
+  th {
+    padding: 6px;
+    border: 1px solid #ccc;
+    text-align: left;
+  }

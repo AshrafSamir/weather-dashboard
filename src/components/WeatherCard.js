@@ -1,13 +1,13 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import Table from './visualization/Table'
 
 export default function WeatherCard(props) {
 
-  const {observation_time, weatherDesc, weatherIconUrl, temp_C, humidity, city, windSpeed} = props
+  const {observation_time, weatherDesc, weatherIconUrl, temp_C, humidity, city, windSpeed, astronomy} = props
 
   return (
     <div style={{display: 'flex', flexWrap: 'wrap'}}>
-      <div className="card" style={{maxWidth: "7rem", margin: '2%' ,flexGrow: '1' }}>
+      <div className="card" style={{maxWidth: "10rem", margin: '2%' ,flexGrow: '1' }}>
           <img src={weatherIconUrl} className="card-img-top" alt="..."></img>
           <div className="card-body" >
               <div style={{textAlignLast: 'center'}}>
@@ -18,11 +18,14 @@ export default function WeatherCard(props) {
               </div>
           </div>
       </div>
+      <div className='card' style={{margin: '2%'}}>
+        <Table astronomy={astronomy}/>
+      </div>
       <div style={{flex: '7', margin: '2%'}}>
         <div>
           <div style={{display: 'flex'}}>
-            <h3 style={{display: 'inline',flex: '7'}}>Humidity:</h3>
-            <h3 style={{display: 'inline', flex: '1'}}>{humidity}%</h3>
+            <h5 style={{display: 'inline',flex: '7'}}>Humidity:</h5>
+            <h5 style={{display: 'inline', flex: '1'}}>{humidity}%</h5>
           </div>
 
           <div className="progress" >
@@ -31,8 +34,8 @@ export default function WeatherCard(props) {
         </div>
         <div style={{marginTop: '5%'}}>
           <div style={{display: 'flex'}}>
-              <h3 style={{display: 'inline',flex: '7'}}>Wind Speed:</h3>
-              <h3 style={{display: 'inline', flex: '1'}}>{windSpeed}kmp/h</h3>
+              <h5 style={{display: 'inline',flex: '7'}}>Wind Speed:</h5>
+              <h5 style={{display: 'inline', flex: '1'}}>{windSpeed}kmp/h</h5>
             </div>
 
             <div className="progress" >

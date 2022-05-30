@@ -13,6 +13,7 @@ export default function CountrySummary() {
     <div>
       <Input/>
       <h4> {city}</h4>
+      <h5>10 Days of forcast</h5>
       <div style={{margin: '3%', display: 'flex', flexWrap: 'wrap' }}>
         {
          forcastArray ? forcastArray.map((day) => 

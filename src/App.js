@@ -14,29 +14,29 @@ function App() {
 
   const dispatch = useDispatch()
   const crd = useGetCordinates()
-  const { country } = useSelector((state)=> state.weather)
+  const { country, city } = useSelector((state)=> state.weather)
 
   useEffect(() => {
     if(crd){
       dispatch(getCountry(crd))
     }
-    if(country){
+    if(country && (city === null)){
       dispatch(getWeatherData({city: country}))
     }
     
-    
-  }, [country, crd, dispatch])
+  }, [city, country, crd, dispatch])
 
   return (
     <div className="layout">
-      <Router>
+      {crd === undefined ? (<h1 style={{margin: 'auto'}}>Cordinates Undefined</h1>): 
+      (      <Router>
         <div style={{  margin: '3%', width: '100vw'}}>
           <Routes>
               <Route exact path="/" element={<CountrySummary />} />
               <Route path="/:city" element={<CitySummary />} />
           </Routes>
         </div>
-      </Router>
+      </Router>)}
     </div>
     );
 }
