@@ -3,11 +3,14 @@ import { useSelector } from 'react-redux'
 import WeatherCard from '../../components/WeatherCard'
 import Input from '../../components/Input'
 import HourlyChart from '../../components/visualization/HourlyChart'
+import { useNavigate } from 'react-router-dom'
 
 
 export default function CurrentCondition() {
 
-  const { observation_time, weatherDesc, weatherIconUrl, temp_C, humidity, city, windSpeed, astronomy } = useSelector((state) => state.weather)
+  const { observation_time, weatherDesc, weatherIconUrl, temp_C, humidity, city, windSpeed, astronomy, status } = useSelector((state) => state.weather)
+  const navigate = useNavigate();
+
   return (
     <div>
       <Input city={city} />
@@ -20,7 +23,7 @@ export default function CurrentCondition() {
       <div >
         <HourlyChart />
       </div>
-
+      <button onClick={()=> navigate('/')} type="button" className="btn btn-dark">Home</button>
     </div>
   )
 }

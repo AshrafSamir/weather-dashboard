@@ -15,7 +15,7 @@ export default function CountrySummary() {
       <div className="card-background__summary">
         <h4> {city}</h4>
         <h5>10 Days of forcast</h5>
-        <div style={{margin: '3%', display: 'flex', flexWrap: 'wrap' }}>
+        <div className="card-layout__summary">
           {
           forcastArray ? forcastArray.map((day) => 
               (<div key = {day.date}><Card date={day.date} maxtempC={day.maxtempC} mintempC={day.mintempC}/></div>)) : 'Loading'
@@ -23,7 +23,7 @@ export default function CountrySummary() {
         </div>
       </div>
       <h4> Weather Graph</h4>
-      <LineChart width={400} height={400}/>
+      <LineChart/>
     </div>
   )
 }

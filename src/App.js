@@ -3,33 +3,42 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 import { useDispatch } from 'react-redux'
-import { getWeatherData, getCountry } from './redux/slices/weatherSlice'
-import { useGetCordinates } from './utils/useGetCordinates'
+import { getWeatherData, getCountryCode, setCountry, setCountryCities } from './redux/slices/weatherSlice'
 
 import CountrySummary from './pages/summaryPages/CountrySummary'
 import CitySummary from './pages/summaryPages/CitySummary'
+
+import { Country, State, City }  from 'country-state-city';
 
 
 function App() {
 
   const dispatch = useDispatch()
-  const crd = useGetCordinates()
-  const { country, city } = useSelector((state)=> state.weather)
+  const { country, city, countryCode, status } = useSelector((state)=> state.weather)
 
   useEffect(() => {
-    if(crd){
-      dispatch(getCountry(crd))
+    
+    dispatch(getCountryCode())
+
+    if(countryCode){
+
+      const { name } = Country.getCountryByCode(countryCode)
+      dispatch(setCountry(name))
+    
+      const cities = City.getCitiesOfCountry(countryCode);
+      dispatch(setCountryCities(cities))
     }
+
     if(country && (city === null)){
       dispatch(getWeatherData({city: country}))
     }
     
-  }, [city, country, crd, dispatch])
+  }, [city, country, countryCode, dispatch])
 
   return (
     <div className="layout">
-      {crd === undefined ? (<h1 style={{margin: 'auto'}}>Cordinates Undefined</h1>): 
-      (      <Router>
+      {status === "failed" ? alert("Failed to retrive location"): 
+      (  <Router>
         <div style={{  margin: '3%', width: '100vw'}}>
           <Routes>
               <Route exact path="/" element={<CountrySummary />} />

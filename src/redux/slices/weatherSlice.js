@@ -7,13 +7,13 @@ export const getWeatherData = createAsyncThunk('weather/getWeatherData', async (
     )
 })
 
-export const getCountry = createAsyncThunk('weather/getCountry', async (obj) => {
-  return fetch(`http://api.worldweatheronline.com/premium/v1/search.ashx?key=c922c071a1aa4997ad6224013222605&q=${obj.latitude},${obj.longitude}&format=json&num_of_results=5`)
+
+ export const getCountryCode = createAsyncThunk('weather/getCountryCode', async () => {
+  return fetch(`http://ipinfo.io/json?token=5ceedde54deca8`)
   .then((res) => 
       res.json()
-  )
+   )
 })
-
 
 const initialState = {
     data: {},
@@ -29,6 +29,8 @@ const initialState = {
     country: null,
     hourlyData: [],
     astronomy: {},
+    countryCode: null,
+    cities: [],
     status: null,
 
 }
@@ -37,13 +39,19 @@ export const weatherSlice = createSlice({
   name: 'weather',
   initialState,
   reducers: {
+    setCountry: (state, action)=> {
+      state.country =  action.payload
+    },
+    setCountryCities: (state, action)=> {
+      state.cities =  action.payload
+    }
   },
   extraReducers: {
     [getWeatherData.pending]: (state, action) => {
       state.status = 'loading'
     },
     [getWeatherData.fulfilled]: (state, action) => {
-      console.log(action.payload.data)
+
       state.data = Object.assign(action.payload.data)
       state.observation_time = action.payload.data.current_condition[0].observation_time
       state.weatherDesc = action.payload.data.current_condition[0].weatherDesc[0].value
@@ -61,19 +69,22 @@ export const weatherSlice = createSlice({
     [getWeatherData.rejected]: (state, action) => {
       state.status = 'failed'
     },
-    [getCountry.pending]: (state, action) => {
+
+
+
+    [getCountryCode.pending]: (state, action) => {
       state.status = 'loading'
     },
-    [getCountry.fulfilled]: (state, action) => {
-      //console.log(action.payload.search_api.result[0].country[0].value)
-      state.country = action.payload.search_api.result[0].country[0].value
+    [getCountryCode.fulfilled]: (state, action) => {
+      state.countryCode = action.payload.country
       state.status = 'success'
     },
-    [getCountry.rejected]: (state, action) => {
+    [getCountryCode.rejected]: (state, action) => {
       state.status = 'failed'
     },
   },
 })
 
+export const { setCountry, setCountryCities } = weatherSlice.actions
 
 export default weatherSlice.reducer
