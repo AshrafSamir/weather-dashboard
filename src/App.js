@@ -37,15 +37,15 @@ function App() {
 
   return (
     <div className="layout">
-      {status === "failed" ? alert("Failed to retrive location"): 
-      (  <Router>
+      {
+       <Router>
         <div style={{  margin: '3%', width: '100vw'}}>
           <Routes>
               <Route exact path="/" element={<CountrySummary />} />
               <Route path="/:city" element={<CitySummary />} />
           </Routes>
         </div>
-      </Router>)}
+      </Router>}
     </div>
     );
 }
