@@ -8,7 +8,7 @@ import { getWeatherData, getCountryCode, setCountry, setCountryCities } from './
 import CountrySummary from './pages/summaryPages/CountrySummary'
 import CitySummary from './pages/summaryPages/CitySummary'
 
-import { Country, State, City }  from 'country-state-city';
+import { Country, City }  from 'country-state-city';
 
 
 function App() {
