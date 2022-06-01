@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 export const getWeatherData = createAsyncThunk('weather/getWeatherData', async (obj) => {
-    return fetch(`http://api.worldweatheronline.com/premium/v1/weather.ashx?key=c922c071a1aa4997ad6224013222605&q=${obj.city}&num_of_days=10&day=today&tp=3&format=json`)
+    return fetch(`https://api.worldweatheronline.com/premium/v1/weather.ashx?key=c922c071a1aa4997ad6224013222605&q=${obj.city}&num_of_days=10&day=today&tp=3&format=json`)
     .then((res) => 
         res.json()
     )
@@ -9,7 +9,7 @@ export const getWeatherData = createAsyncThunk('weather/getWeatherData', async (
 
 
  export const getCountryCode = createAsyncThunk('weather/getCountryCode', async () => {
-  return fetch(`http://ipinfo.io/json?token=5ceedde54deca8`)
+  return fetch(`https://ipinfo.io/json?token=5ceedde54deca8`)
   .then((res) => 
       res.json()
    )
