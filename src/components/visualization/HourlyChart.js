@@ -35,7 +35,9 @@ export default function HourlyChart() {
           }
         },
         legend: {
-          data: ['TemperatureC', 'TemperatureF']
+          data: ['TemperatureC', 'TemperatureF'],
+          top: 50,
+          right: 10,
         },
         toolbox: {
           feature: {

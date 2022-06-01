@@ -31,7 +31,9 @@ const LineChart = (props) => {
             trigger: 'axis'
         },
         legend: {
-            data: ['Avg temperature']
+            data: ['Avg temperature'],
+            top: 50,
+            right: 10,
         },
         grid: {
             left: '3%',
@@ -66,7 +68,7 @@ const LineChart = (props) => {
 
 
     return (
-        <ReactEcharts option={option} />
+        <ReactEcharts  option={option} />
     )
 }
 

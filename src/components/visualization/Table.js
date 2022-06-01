@@ -43,7 +43,7 @@ const Table = (props) => {
             .append('tr');
       
           // create a cell in each row for each column
-          var cells = rows.selectAll('td')
+          rows.selectAll('td')
             .data(function (row) {
               return columns.map(function (column) {
                 return {column: column, value: row[column]};

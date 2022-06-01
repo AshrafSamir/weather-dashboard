@@ -23,7 +23,10 @@ export default function CountrySummary() {
         </div>
       </div>
       <h4> Weather Graph</h4>
-      <LineChart/>
+      <div className="card-background__summary">
+        <LineChart/>
+      </div>
+      
     </div>
   )
 }

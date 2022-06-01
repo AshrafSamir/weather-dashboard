@@ -8,12 +8,6 @@ export const getWeatherData = createAsyncThunk('weather/getWeatherData', async (
 })
 
 
- export const getCountryCode = createAsyncThunk('weather/getCountryCode', async () => {
-  return fetch(`https://ipinfo.io/json?token=5ceedde54deca8`)
-  .then((res) => 
-      res.json()
-   )
-})
 
 const initialState = {
     data: {},
@@ -22,15 +16,11 @@ const initialState = {
     weatherIconUrl: null,
     temp_C: null,
     humidity: null,
-    city: null,
     forcastArray: [],
     chartData: [],
     windSpeed: null,
-    country: null,
     hourlyData: [],
     astronomy: {},
-    countryCode: null,
-    cities: [],
     status: null,
 
 }
@@ -39,12 +29,7 @@ export const weatherSlice = createSlice({
   name: 'weather',
   initialState,
   reducers: {
-    setCountry: (state, action)=> {
-      state.country =  action.payload
-    },
-    setCountryCities: (state, action)=> {
-      state.cities =  action.payload
-    }
+
   },
   extraReducers: {
     [getWeatherData.pending]: (state, action) => {
@@ -70,21 +55,8 @@ export const weatherSlice = createSlice({
       state.status = 'failed'
     },
 
-
-
-    [getCountryCode.pending]: (state, action) => {
-      state.status = 'loading'
-    },
-    [getCountryCode.fulfilled]: (state, action) => {
-      state.countryCode = action.payload.country
-      state.status = 'success'
-    },
-    [getCountryCode.rejected]: (state, action) => {
-      state.status = 'failed'
-    },
   },
 })
 
-export const { setCountry, setCountryCities } = weatherSlice.actions
 
 export default weatherSlice.reducer
